@@ -49,7 +49,9 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div id="video-player"></div>
+                                    <div id="video-player" class="embed-responsive embed-responsive-16by9">
+                                          <iframe data-bind="attr: { src: embeddedURL }" type="text/html" class="embed-responsive-item"></iframe>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row video-meta">
@@ -74,7 +76,7 @@
                             </div>
                             <div class="row new-comment">
                                 <div class="col-md-12">
-                                    <input type="text" placeholder="comment..." class="form-control input-lg form-control-no-radius">
+                                    <input data-bind="value: normalURL" type="text" placeholder="comment..." class="form-control input-lg form-control-no-radius">
                                 </div>
                             </div>
                         </div>
@@ -140,8 +142,10 @@
 
         <!-- Bootstrap scripts -->
         <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/plugins/knockout/knockout.min.js"></script>
 
         <!-- Popup module scripts -->
         <script src="assets/scripts/popup.js"></script>
+        <script type="text/javascript">Popup.init()</script>
     </body>
 </html>
