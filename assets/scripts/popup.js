@@ -1,4 +1,7 @@
 var Popup = function() {
+    var _monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
 
     var handleVideoEmbed = function() {
         function VideoModel() {
@@ -13,7 +16,56 @@ var Popup = function() {
             });
         }
 
-        ko.applyBindings( new VideoModel() );
+        ko.applyBindings( new VideoModel(), document.getElementById( 'video-player' ) );
+    };
+
+    var handleCommentSection = function() {
+        function Comment( data ) {
+            this.image = data.image;
+            this.name = data.name;
+            this.date = data.date;
+            this.description = data.desc;
+        }
+
+        function CommentModel() {
+            var self = this;
+            self.reply = ko.observable("");
+            self.comments = ko.observableArray([]);
+
+            // Init a single comment
+            self.comments([
+                new Comment({
+                    image: 'assets/img/user.png',
+                    name: 'Stoyan Daskaloff',
+                    date: 'March 7, 2013 AT 7:30 PM',
+                    desc: 'Sed quis diam egestas, egtestas mauris in, dapibus eros. Duis nisi nulla, accumsan eu libero sit amet, faucibus ornare nisi. Phasellus cursus dolor ante, at placerat est tincidunt vel. In ullamcorper pulvinar est id congue. Pellentesque scelerisque ante vel justo varius, non aliquet est eleifend. Aliquam erat volutpat. Curabitur blandit, lorem eget tincidunt scelerisque, mauris felis pellentesque dolor, et adipiscing nisi ipsum eget est.'
+                }),
+            ]);
+
+            self.addComment = function() {
+                if ( self.reply() !== '' ) {
+                    var today = new Date(),
+                        formatedDate = today.getDay() + ' ' +
+                                       _monthNames[ today.getMonth() ] + ', ' +
+                                       today.getFullYear() + ' at ' +
+                                       today.getHours() + ':' +
+                                       today.getMinutes();
+
+                    self.comments.push(
+                        new Comment({
+                            image: 'http://placehold.it/75x75',
+                            name: 'Anonymous',
+                            date: formatedDate,
+                            desc: self.reply()
+                        })
+                    );
+
+                    self.reply('');
+                };
+            };
+        };
+
+        ko.applyBindings( new CommentModel(), document.getElementById( 'comment-section' ) );
     };
 
     var getEmbeddedURL = function( normalURL ) {
@@ -36,6 +88,7 @@ var Popup = function() {
         init: function() {
             // initialize video bind and embed
             handleVideoEmbed();
+            handleCommentSection();
         },
 
         /** public functions and helper methods */

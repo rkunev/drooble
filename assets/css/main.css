@@ -232,6 +232,8 @@ input[type="text"] {
     padding-right: 15px;
 }
 .comment .comment-header img {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
 }
 .comment .comment-header .comment-heading {
@@ -264,11 +266,13 @@ blockquote {
     color: #192a3e;
     font-size: 16px;
     line-height: 1.75;
-    margin-bottom: 0;
 }
 .comment blockquote,
 .comment .comment-reply {
     padding: 15px 0 15px 25px;
+}
+.comment blockquote:last-child {
+    margin-bottom: 0;
 }
 .comment .comment-reply {
     padding-top: 10px;
