@@ -134,10 +134,19 @@ h1 {
 .modal-header .close:focus {
     color: rgba( 220, 99, 99, 0.75 );
 }
-#video-player {
-    /*height: 415px;
-    background: transparent url('../img/static-video.png') center center no-repeat;
-    background-size: cover;*/
+.embed-responsive {
+    -webkit-transition: padding 0.2s linear;
+    -o-transition: padding 0.2s linear;
+    transition: padding 0.2s linear;
+}
+.embed-empty {
+    padding-bottom: 0;
+}
+.embed-responsive-16by9.embed-active {
+    padding-bottom: 56.25%;
+}
+.embed-responsive-item {
+    border-radius: 4px;
 }
 .btn {
     text-transform: uppercase;
@@ -179,7 +188,9 @@ h1 {
     padding: 0;
 }
 .btn-group span {
+    vertical-align: middle;
     font-size: 14px;
+    line-height: 1.5;
 }
 .video-meta {
     margin-top: 10px;
@@ -320,7 +331,29 @@ blockquote {
 .comment .comment-reply .btn {
     font-weight: 600;
 }
-
+.icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    -webkit-background-size: 16px 16px;
+    background-size: 16px 16px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.icon-heart {
+    background-image: url('../img/icons/heart.png');
+}
+.icon-share {
+    background-image: url('../img/icons/share.png');
+}
+.icon-comments {
+    background-image: url('../img/icons/comments.png');
+}
+.icon-flag {
+    background-image: url('../img/icons/flag.png');
+}
 
 
 
