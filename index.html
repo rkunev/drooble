@@ -7,7 +7,7 @@
         <meta name="description" content="Drooble Pop-up">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Fonts & font-icons -->
+        <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
@@ -35,14 +35,13 @@
             </div>
         </div>
 
-        <div id="awesomePopup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="awesomePopupLabel">
+        <div id="awesomePopup" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <!-- <h4 class="modal-title" id="awesomePopupLabel">Modal title</h4> -->
                     </div>
                     <div class="modal-body">
                         <div id="video-player" class="container-fluid">
@@ -78,9 +77,10 @@
                                     <input data-bind="value: normalURL" type="text" placeholder="Youtube video" class="form-control input-lg form-control-no-radius">
                                 </div>
                             </div>
-                        </div>
+                        </div><!-- /#video-player -->
 
                         <div class="row"><hr></div>
+
                         <aside id="comment-section" class="row">
                             <div class="col-md-12">
                                 <div class="comment">
@@ -121,7 +121,7 @@
                                                 </div>
                                             </div>
                                         </blockquote>
-                                    </section>
+                                    </section><!-- / comment template -->
                                     <form data-bind="submit: addComment" class="comment-reply">
                                         <div class="btn-group">
                                             <button class="btn btn-gray btn-no-radius active" type="button">Comment</button>
@@ -129,7 +129,7 @@
                                             <button class="btn btn-gray btn-no-radius" type="button">Feedback</button>
                                         </div>
                                         <input id="reply" type="text" data-bind="value: reply" placeholder="Reply ..." class="form-control input-lg form-control-no-radius">
-                                    </form>
+                                    </form><!-- /.comment-reply -->
                                 </div>
                             </div>
                         </aside>

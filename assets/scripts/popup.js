@@ -1,7 +1,5 @@
 var Popup = function() {
-    var _monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
+    var _monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 
     var handleVideoEmbed = function() {
         function VideoModel() {
@@ -68,6 +66,13 @@ var Popup = function() {
         ko.applyBindings( new CommentModel(), document.getElementById( 'comment-section' ) );
     };
 
+    /**
+     * Get url for iframe embed
+     * @param   String  normalURL  Full youtube video URL
+     * @return  String             Returns formatted URL.
+     *                             If normalURL is not youtube link
+     *                             will return just the normalURL.
+     */
     var getEmbeddedURL = function( normalURL ) {
         var videoId = getParameterFromStringByName( normalURL, 'v' ),
             normalURL = 'https://www.youtube.com/embed/';
@@ -75,11 +80,17 @@ var Popup = function() {
         return videoId ? normalURL + videoId : videoId;
     };
 
+    /**
+     * Find parameter from url string
+     * @param   String  str   URL-like string
+     * @param   String  name  Query var from the URL-like string
+     * @return  String        The value from the query var. Empty string if not found
+     */
     var getParameterFromStringByName = function( str, name ) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(str);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        name = name.replace( /[\[]/, "\\[" ).replace( /[\]]/, "\\]" );
+        var regex = new RegExp( "[\\?&]" + name + "=([^&#]*)" ),
+            results = regex.exec( str );
+        return results === null ? "" : decodeURIComponent( results[1].replace( /\+/g, " " ) );
     };
 
     return {
@@ -88,6 +99,8 @@ var Popup = function() {
         init: function() {
             // initialize video bind and embed
             handleVideoEmbed();
+
+            // initialize comment template section
             handleCommentSection();
         },
 
