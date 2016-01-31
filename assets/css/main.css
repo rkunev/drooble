@@ -95,15 +95,22 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-body {
-    font-family: 'PT Sans', sans-serif;
-}
-h1 {
-    margin-bottom: 25px;
-}
+/* Typography & headings */
+body { font-family: 'PT Sans', sans-serif; }
+input[type="text"] { font-family: 'Montserrat', serif; }
+.comment .comment-header .comment-heading { font-family: 'Merriweather', serif; }
+
+h1 { margin-bottom: 25px; }
+
+/* Modal */
 .modal-dialog {
     width: 870px;
     font-size: 16px;
+}
+@media screen and (max-width: 900px) {
+    .modal-dialog {
+        width: 600px;
+    }
 }
 .modal-header {
     border: 0;
@@ -129,11 +136,24 @@ h1 {
 .modal-header .close:focus {
     color: rgba( 220, 99, 99, 0.75 );
 }
-#video-player {
-    height: 415px;
-    background: transparent url('../img/static-video.png') center center no-repeat;
-    background-size: cover;
+
+/* Embed iframe */
+.embed-responsive {
+    -webkit-transition: padding 0.2s linear;
+    -o-transition: padding 0.2s linear;
+    transition: padding 0.2s linear;
 }
+.embed-empty {
+    padding-bottom: 0;
+}
+.embed-responsive-16by9.embed-active {
+    padding-bottom: 56.25%;
+}
+.embed-responsive-item {
+    border-radius: 4px;
+}
+
+/* Buttons */
 .btn {
     text-transform: uppercase;
     font-size: 12px;
@@ -152,16 +172,24 @@ h1 {
     font-size: 16px;
     margin-right: 5px;
 }
+.btn.btn-gray {
+    color: #b4b4b4;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+}
+.btn.btn-gray:hover,
+.btn.btn-gray.active {
+    border: 0;
+    color: #555;
+    font-weight: 600;
+}
 .form-control.form-control-no-radius,
 .btn.btn-no-radius {
     border-radius: 0;
 }
-.text-primary-light {
-    color: #1cafcf;
-}
-.text-primary-dark {
-    color: #323a45;
-}
+
+/* Button groups */
 .btn-group {
     margin-left: -7px;
     margin-right: -7px;
@@ -174,11 +202,9 @@ h1 {
     padding: 0;
 }
 .btn-group span {
+    vertical-align: middle;
     font-size: 14px;
-}
-.video-meta {
-    margin-top: 10px;
-    margin-bottom: 25px;
+    line-height: 1.5;
 }
 .btn-group .btn-controls {
     margin-left: 3px;
@@ -201,6 +227,18 @@ h1 {
 .btn-controls.btn-danger {
     background-color: #ea445b;
 }
+.btn-controls,
+.comment .comment-reply .btn {
+    font-weight: 600;
+}
+
+/* Video player */
+.video-meta {
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+/* Form controls */
 ::-webkit-input-placeholder {
    font-style: italic;
 }
@@ -213,9 +251,8 @@ h1 {
 :-ms-input-placeholder {
    font-style: italic;
 }
-input[type="text"] {
-    font-family: 'Montserrat', serif;
-}
+
+/* Comment template */
 .comment .comment-header {
     margin-bottom: 20px;
 }
@@ -227,10 +264,11 @@ input[type="text"] {
     padding-right: 15px;
 }
 .comment .comment-header img {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
 }
 .comment .comment-header .comment-heading {
-    font-family: 'Merriweather', serif;
     color: #28b7d7;
     font-size: 18px;
     margin-top: 8px;
@@ -251,36 +289,23 @@ input[type="text"] {
 .comment .comment-modifier-group button i {
     color: #d5d5d5;
 }
-.text-muted {
-    color: #b5b5b5;
-}
 blockquote {
     border-left: 6px solid #e6e6e6;
     color: #192a3e;
     font-size: 16px;
     line-height: 1.75;
-    margin-bottom: 0;
 }
 .comment blockquote,
 .comment .comment-reply {
     padding: 15px 0 15px 25px;
 }
+.comment blockquote:last-child {
+    margin-bottom: 0;
+}
 .comment .comment-reply {
     padding-top: 10px;
     border-top: 1px solid #e6e6e6;
     border-left: 6px solid #c6c6c6;
-}
-.btn.btn-gray {
-    color: #b4b4b4;
-    background-color: transparent;
-    border: 0;
-    box-shadow: none;
-}
-.btn.btn-gray:hover,
-.btn.btn-gray.active {
-    border: 0;
-    color: #555;
-    font-weight: 600;
 }
 .comment .comment-reply .btn-group {
     margin-left: -10px;
@@ -293,6 +318,7 @@ blockquote {
     margin-left: 10px;
     margin-right: 10px;
 }
+/* Triangle pseudo-element */
 .comment .comment-reply .btn-group .btn.active:after,
 .comment .comment-reply .btn-group .btn:hover:after {
     content: '';
@@ -307,11 +333,31 @@ blockquote {
     border-width: 0 4px 4px 4px;
     border-color: transparent transparent #efefed transparent;
 }
-.btn-controls,
-.comment .comment-reply .btn {
-    font-weight: 600;
-}
 
+/* Icons */
+.icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    -webkit-background-size: 16px 16px;
+    background-size: 16px 16px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.icon-heart {
+    background-image: url('../img/icons/heart.png');
+}
+.icon-share {
+    background-image: url('../img/icons/share.png');
+}
+.icon-comments {
+    background-image: url('../img/icons/comments.png');
+}
+.icon-flag {
+    background-image: url('../img/icons/flag.png');
+}
 
 
 
@@ -326,6 +372,9 @@ blockquote {
 
 .hidden {
     display: none !important;
+}
+.text-muted {
+    color: #b5b5b5;
 }
 
 /*

@@ -1,83 +1,111 @@
 var Popup = function() {
+    'use strict';
 
-    // singletonPrivateVar
-    var singletonPrivateVar = false;
+    var _monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 
-    // initializes main settings
-    var handleInit = function() {
+    var handleVideoEmbed = function() {
+        function VideoModel() {
+            this.normalURL = ko.observable();
 
-        if ($('body').css('direction') === 'rtl') {
-            isRTL = true;
+            this.embeddedURL = ko.pureComputed({
+                read: function () {
+                    var urlParams = getEmbeddedURL( this.normalURL() );
+                    return urlParams;
+                },
+                owner: this
+            });
         }
-
-        isIE8 = !!navigator.userAgent.match(/MSIE 8.0/);
-        isIE9 = !!navigator.userAgent.match(/MSIE 9.0/);
-        isIE10 = !!navigator.userAgent.match(/MSIE 10.0/);
-
-        if (isIE10) {
-            $('html').addClass('ie10'); // detect IE10 version
-        }
-
-        if (isIE10 || isIE9 || isIE8) {
-            $('html').addClass('ie'); // detect IE10 version
-        }
+        
+        ko.applyBindings( new VideoModel(), document.getElementById( 'video-player' ) );
     };
 
+    var handleCommentSection = function() {
+        function Comment( data ) {
+            this.image = data.image;
+            this.name = data.name;
+            this.date = data.date;
+            this.description = data.desc;
+        }
 
-    // Handles Bootstrap Modals.
-    var handleModals = function() {
-        // fix stackable modal issue: when 2 or more modals opened, closing one of modal will remove .modal-open class.
-        $('body').on('hide.bs.modal', function() {
-            if ($('.modal:visible').size() > 1 && $('html').hasClass('modal-open') === false) {
-                $('html').addClass('modal-open');
-            } else if ($('.modal:visible').size() <= 1) {
-                $('html').removeClass('modal-open');
-            }
-        });
+        function CommentModel() {
+            var self = this;
+            self.reply = ko.observable("");
+            self.comments = ko.observableArray([]);
 
-        // fix page scrollbars issue
-        $('body').on('show.bs.modal', '.modal', function() {
-            if ($(this).hasClass("modal-scroll")) {
-                $('body').addClass("modal-open-noscroll");
-            }
-        });
+            // Init a single comment
+            self.comments([
+                new Comment({
+                    image: 'assets/img/user.png',
+                    name: 'Stoyan Daskaloff',
+                    date: 'March 7, 2013 AT 7:30 PM',
+                    desc: 'Sed quis diam egestas, egtestas mauris in, dapibus eros. Duis nisi nulla, accumsan eu libero sit amet, faucibus ornare nisi. Phasellus cursus dolor ante, at placerat est tincidunt vel. In ullamcorper pulvinar est id congue. Pellentesque scelerisque ante vel justo varius, non aliquet est eleifend. Aliquam erat volutpat. Curabitur blandit, lorem eget tincidunt scelerisque, mauris felis pellentesque dolor, et adipiscing nisi ipsum eget est.'
+                }),
+            ]);
 
-        // fix page scrollbars issue
-        $('body').on('hide.bs.modal', '.modal', function() {
-            $('body').removeClass("modal-open-noscroll");
-        });
+            self.addComment = function() {
+                if ( self.reply() !== '' ) {
+                    var today = new Date(),
+                        formatedDate = today.getDay() + ' ' +
+                                       _monthNames[ today.getMonth() ] + ', ' +
+                                       today.getFullYear() + ' at ' +
+                                       today.getHours() + ':' +
+                                       today.getMinutes();
 
-        // remove ajax content and remove cache on modal closed
-        $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
-            $(this).removeData('bs.modal');
-        });
+                    self.comments.push(
+                        new Comment({
+                            image: 'http://placehold.it/75x75',
+                            name: 'Anonymous',
+                            date: formatedDate,
+                            desc: self.reply()
+                        })
+                    );
+
+                    self.reply('');
+                };
+            };
+        };
+
+        ko.applyBindings( new CommentModel(), document.getElementById( 'comment-section' ) );
+    };
+
+    /**
+     * Get url for iframe embed
+     * @param   String  normalURL  Full youtube video URL
+     * @return  String             Returns formatted URL.
+     *                             If normalURL is not youtube link
+     *                             will return just the normalURL.
+     */
+    var getEmbeddedURL = function( normalURL ) {
+        var videoId = getParameterFromStringByName( normalURL, 'v' ),
+            normalURL = 'https://www.youtube.com/embed/';
+
+        return videoId ? normalURL + videoId : videoId;
+    };
+
+    /**
+     * Find parameter from url string
+     * @param   String  str   URL-like string
+     * @param   String  name  Query var from the URL-like string
+     * @return  String        The value from the query var. Empty string if not found
+     */
+    var getParameterFromStringByName = function( str, name ) {
+        name = name.replace( /[\[]/, "\\[" ).replace( /[\]]/, "\\]" );
+        var regex = new RegExp( "[\\?&]" + name + "=([^&#]*)" ),
+            results = regex.exec( str );
+        return results === null ? "" : decodeURIComponent( results[1].replace( /\+/g, " " ) );
     };
 
     return {
 
-        /** main function to initiate the theme */
+        /** kickstart the page */
         init: function() {
-            // initialize core variables
-            handleInit();
+            // initialize video bind and embed
+            handleVideoEmbed();
 
-            // UI Component handlers
-            handleModals(); // handle modals
+            // initialize comment template section
+            handleCommentSection();
         },
 
         /** public functions and helper methods */
-
-        // Get a parameter by name from URL
-        getURLParameter: function(paramName) {
-            var searchString = window.location.search.substring(1),
-                i, val, params = searchString.split("&");
-
-            for (i = 0; i < params.length; i++) {
-                val = params[i].split("=");
-                if (val[0] == paramName) {
-                    return unescape(val[1]);
-                }
-            }
-            return null;
-        }
     };
 }();
