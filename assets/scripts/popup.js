@@ -1,4 +1,6 @@
 var Popup = function() {
+    'use strict';
+
     var _monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 
     var handleVideoEmbed = function() {
@@ -13,7 +15,7 @@ var Popup = function() {
                 owner: this
             });
         }
-
+        
         ko.applyBindings( new VideoModel(), document.getElementById( 'video-player' ) );
     };
 
